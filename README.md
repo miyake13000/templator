@@ -1,31 +1,31 @@
 # Templator
 
-Templator: Jinja2ベースのテンプレートジェネレーター
+Templator: Template generator based on Jinja2
 
-[English](README.md)
+[日本語](README_ja.md)
 
-## 機能
-- ✅ テキスト形式でテンプレートを登録
-- ✅ テンプレートに変数や条件付きループを挿入
-- ✅ Webインターフェースを使用して変数に値を入力
-- ✅ テンプレート内の変数に基づいてフォームを自動生成
-- ✅ 変数の型（文字列、整数、真偽値、選択など）とその値の候補を定義
-- ✅ 定義された型に合わせた入力フォームを表示（テキストフィールド、ドロップダウン、チェックボックスなど）
+## Features
+- ✅ Register templates in text format
+- ✅ Insert variables and conditional loops in templates
+- ✅ Input values for variables via a web interface
+- ✅ Automatically generate forms based on variables in templates
+- ✅ Define variable types (string, integer, boolean, select, etc.) and possible values
+- ✅ Display input forms tailored to the defined types (e.g., text fields, dropdowns, checkboxes)
 
-## セットアップ
-### 前提条件
+## Setup
+### Prerequisites
 - Python >= 3.8
-- 必要なライブラリ:
+- Libraries:
   - Flask
   - Jinja2
 
-### インストール
+### Installation
 
 ```bash
 pip install flask jinja2
 ```
 
-### 起動
+### Launch
 
 ```bash
 python app.py -d -b 127.0.0.1 -p 8000
@@ -34,65 +34,66 @@ python app.py -d -b 127.0.0.1 -p 8000
 # -p: Bind port
 ```
 
-サーバーが起動したら、ブラウザで `http://localhost:8000` にアクセスしてください。
+Once the server has launched, access it via your browser at `http://localhost:8000`.
 
-## テンプレート文法
-### 変数の定義
+## Template Grammar
 
-変数はテンプレート内に以下のようなコメント構文で定義します:
+### Variable Definition
+
+Define variables in the templates using the comment syntax:
 
 ```
 {# @variable variable_name: type=type_name, option1=value1, option2=value2 #}
 ```
 
-### サポートされている型
+### Supported Types
 
-- `string` - テキスト入力
-- `integer` - 整数入力
-- `number` - 数値入力（小数をサポート）
-- `boolean` - チェックボックス
-- `select` - ドロップダウンリスト（`options` の指定が必要）
-- `array` - カンマ区切りリスト
+- `string` - Text input
+- `integer` - Integer input
+- `number` - Numeric input (supports decimals)
+- `boolean` - Checkbox
+- `select` - Dropdown list (requires specified `options`)
+- `array` - Comma-separated list
 
-### オプション
+### Options
 
-- `label` - フォームに表示されるラベル
-- `required` - 必須項目かどうかを指定（true/false）
-- `options` - 選択肢の配列（`select` 型の場合）
-- `min`, `max` - 最小値と最大値（数値入力の場合）
-- `default` - デフォルト値
-- `placeholder` - プレースホルダーテキスト
-- `description` - フィールドの説明やヘルプテキスト
+- `label` - Label displayed in the form
+- `required` - Specifies whether the field is mandatory (true/false)
+- `options` - Array of choices (for `select` type)
+- `min`, `max` - Minimum and maximum value (for numeric inputs)
+- `default` - Default value
+- `placeholder` - Placeholder text
+- `description` - Description or help text for the field
 
-### Jinja2構文
-- 変数: `{{ variable }}`
-- 繰り返し: `{% for item in items %}...{% endfor %}`
-- 条件分岐: `{% if condition %}...{% endif %}`
+### Jinja2 Syntax
+- Variables: `{{ variable }}`
+- Loops: `{% for item in items %}...{% endfor %}`
+- Conditions: `{% if condition %}...{% endif %}`
 
 
-## 例
-### 1. ビジネスメールテンプレート
+## Examples
+### 1. Business Email Template
 
 ```jinja2
-{# @variable recipient_name: type=string, label="受信者名", required=true, placeholder="山田 太郎" #}
-{# @variable sender_name: type=string, label="送信者名", required=true, placeholder="田中 花子" #}
-{# @variable subject: type=string, label="件名", required=true #}
-{# @variable urgent: type=boolean, label="緊急フラグ", default=false #}
-{# @variable department: type=select, label="部署", options=["営業", "開発", "人事", "総務"], required=true #}
+{# @variable recipient_name: type=string, label="Recipient Name", required=true, placeholder="John Doe" #}
+{# @variable sender_name: type=string, label="Sender Name", required=true, placeholder="Jane Smith" #}
+{# @variable subject: type=string, label="Subject", required=true #}
+{# @variable urgent: type=boolean, label="Urgency Flag", default=false #}
+{# @variable department: type=select, label="Department", options=["Sales", "Development", "HR", "Administration"], required=true #}
 
-{% if urgent %}【緊急】{% endif %}{{ subject }}
+{% if urgent %}【URGENT】{% endif %}{{ subject }}
 
-{{ recipient_name }}様
+Dear {{ recipient_name }},
 
-{{ department }}の{{ sender_name }}です。
+This is {{ sender_name }} from {{ department }}.
 
-{{ subject }}についてご連絡いたしました。
+I am reaching out regarding {{ subject }}.
 
 {% if urgent %}
-※ 至急ご確認ください。
+※ Please confirm on an urgent basis.
 {% endif %}
 
-よろしくお願いいたします。
+Looking forward to your response.
 
 ---
 {{ sender_name }}
@@ -100,44 +101,44 @@ python app.py -d -b 127.0.0.1 -p 8000
 ```
 
 
-### 2. タスクリストテンプレート
+### 2. Task List Template
 
 ```jinja2
-{# @variable project_name: type=string, label="プロジェクト名", required=true #}
-{# @variable tasks: type=array, label="タスク内容", required=true #}
-{# @variable priority: type=select, label="優先度", options=["高", "中", "低"], default="中" #}
-{# @variable deadline: type=datetime, label="締め切り", placeholder="2026-03-31" #}
-{# @variable assigned_to: type=string, label="担当者" #}
+{# @variable project_name: type=string, label="Project Name", required=true #}
+{# @variable tasks: type=array, label="Task Contents", required=true #}
+{# @variable priority: type=select, label="Priority", options=["high", "mid", "low"], default="mid" #}
+{# @variable deadline: type=datetime, label="Deadline", placeholder="2026-03-31" #}
+{# @variable assigned_to: type=string, label="Assigned To" #}
 
-# {{ project_name }} - タスクリスト
+# {{ project_name }} - Task List
 
-優先度: {{ priority }}
-締め切り: {{ deadline }}
-担当者: {{ assigned_to }}
+Priority: {{ priority }}
+Deadline: {{ deadline }}
+Assigned To: {{ assigned_to }}
 
-## タスクリスト
+## Task List
 {% for task in tasks %}
 - [ ] {{ task }}
 {% endfor %}
 
 ---
-最終更新: {{ deadline }}
+Last updated: {{ deadline }}
 ```
 
 ## API
-### テンプレート登録
+### Register Template
 - **POST** `/api/templates`
-- ボディ: `{"name": "<string:template_name>", "template": "string:template_content"}`
+- Body: `{"name": "<string:template_name>", "template": "string:template_content"}`
 
-### テンプレート一覧
+### List Templates
 - **GET** `/api/templates`
 
-### 特定のテンプレート取得
+### Get a Specific Template
 - **GET** `/api/templates/<integer:template_id>`
 
-### テンプレートの特定データでのレンダリング
+### Render a Specific Template with Data
 - **POST** `/api/templates/<integer:template_id>/render`
-- ボディ: `{"string:var_name": "string:value" ...}`
+- Body: `{"string:var_name": "string:value" ...}`
 
-### 特定のテンプレート削除
+### Delete a Specific Template
 - **DELETE** `/api/templates/<integer:template_id>`
