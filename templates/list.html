@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+List
+{% endblock %}
+
+{% block list_tab %}
+active
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h2>テンプレート一覧</h2>
+  <div id="edit-result" class="result-box" style="display: none;"></div>
+  <div id="templates-list" class="templates-list"></div>
+</div>
+
+<script src="{{ url_for('static', filename='js/list.js') }}"></script>
+{% endblock %}

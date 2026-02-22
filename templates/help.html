@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Help
+{% endblock %}
+
+{% block help_tab %}
+active
+{% endblock %}
+
+{% block content %}
+<!-- ヘルプタブ -->
+<div class="help-box">
+  <h3>テンプレート記法</h3>
+  <p><strong>変数の定義:</strong></p>
+  <pre><code>{\#- @variable 変数名: type=型, label="ラベル", required=true -\#}</code></pre>
+
+  <p><strong>対応している型:</strong></p>
+  <ul>
+    <li><code>string</code> - テキスト入力</li>
+    <li><code>integer</code> - 整数入力</li>
+    <li><code>number</code> - 数値入力（小数対応）</li>
+    <li><code>datetime</code> - 日付+時刻入力</li>
+    <li><code>boolean</code> - チェックボックス</li>
+    <li><code>select</code> - プルダウン（options指定必須）</li>
+    <li><code>array</code> - カンマ or 改行区切りのリスト</li>
+  </ul>
+
+  <p><strong>追加オプション:</strong></p>
+  <ul>
+    <li><code>label</code> - フォームに表示するラベル</li>
+    <li><code>required</code> - 必須項目（true/false）</li>
+    <li><code>options</code> - 選択肢の配列 [例: <code>options=["選択1", "選択2"]</code>]</li>
+    <li><code>min</code>, <code>max</code> - 数値の最小・最大値</li>
+    <li><code>default</code> - デフォルト値</li>
+    <li><code>placeholder</code> - プレースホルダー</li>
+  </ul>
+
+  <p><strong>Jinja2構文:</strong></p>
+  <ul>
+    <li>変数: <code>{{ "{{ variable }}" }}</code></li>
+    <li>繰り返し: <code>{{ "{% for item in items %}" }}...{{ "{% endfor %}" }}</code></li>
+    <li>制御構文には  '-' を付けることで制御構文による空行を削除できます。</li>
+  </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block template_tab %}
+active
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <details>
+    <summary class="template-details">テンプレートを登録</summary>
+    <form id="create-template-form">
+      <div class="form-group">
+        <label for="template-name">テンプレート名 *</label>
+        <input type="text" id="template-name" required placeholder="例: 議事録">
+      </div>
+
+      <div class="form-group">
+        <label for="template-text">テンプレート内容 *</label>
+        <textarea id="template-text" rows="15" required placeholder="テンプレートを入力してください..."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">テンプレートを登録</button>
+    </form>
+
+    <div id="create-result" class="result-box" style="display: none;"></div>
+  </details>
+</div>
+
+<div class="card">
+  <h2>テンプレートを選択</h2>
+  <div class="form-group">
+    <select id="template-select" onclick="loadTemplateForGeneration()">
+      <option value="">-- テンプレートを選択 --</option>
+    </select>
+  </div>
+
+  <div id="dynamic-form-container" style="display: none;">
+    <div class="card">
+      <form id="dynamic-form"></form>
+      <button class="btn btn-primary" onclick="generateText()">テキストを生成</button>
+    </div>
+  </div>
+
+  <div id="output-container" class="card" style="display: none;">
+    <h2>生成結果</h2>
+    <div class="output-actions">
+      <button class="btn btn-secondary" onclick="copyToClipboard()">📋 コピー</button>
+      <button class="btn btn-secondary" onclick="downloadText()">💾 ダウンロード</button>
+    </div>
+    <pre id="output-text" class="output-box"></pre>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/template.js') }}"></script>
+{% endblock %}
