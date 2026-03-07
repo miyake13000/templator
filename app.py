@@ -254,7 +254,7 @@ def render_template_endpoint(template_id):
                 try:
                     converted_inputs[var_name] = datetime.fromisoformat(value)
                 except (ValueError, TypeError):
-                    converted_inputs[var_name] = datetime.datetime.now()
+                    converted_inputs[var_name] = datetime.now()
             elif var_type == 'boolean':
                 converted_inputs[var_name] = value in [True, 'true', 'True', 1, '1']
             elif var_type == 'array':
