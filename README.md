@@ -22,7 +22,7 @@ Templator: Template generator based on Jinja2
 ### Installation
 
 ```bash
-pip install flask jinja2
+pip install -r requirements.txt
 ```
 
 ### Launch
@@ -35,6 +35,11 @@ python app.py -d -b 127.0.0.1 -p 8000
 ```
 
 Once the server has launched, access it via your browser at `http://localhost:8000`.
+
+### Or you can use docker
+```bash
+docker compose up
+```
 
 ## Template Grammar
 

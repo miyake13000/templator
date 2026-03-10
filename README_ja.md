@@ -36,6 +36,11 @@ python app.py -d -b 127.0.0.1 -p 8000
 
 サーバーが起動したら、ブラウザで `http://localhost:8000` にアクセスしてください。
 
+### または Docker を使うこともできます
+```bash
+docker compose up
+```
+
 ## テンプレート文法
 ### 変数の定義
 

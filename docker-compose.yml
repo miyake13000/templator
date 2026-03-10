@@ -1,0 +1,8 @@
+services:
+  templator:
+    build: .
+    ports:
+      - "12345:5000"
+    restart: always
+    volumes:
+      - ./instance:/app/instance
